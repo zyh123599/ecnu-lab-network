@@ -1,0 +1,146 @@
+[
+  {
+    "username": "u",
+    "password": "a",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}IFShUQCcBj4BkeXrwFUXsPT99ybW3wjMxuZyc8//pM/gjUA8vy1+hGE1s2FGwWuzgBlmVVGyfU5yJSHmAfVlLrN33xTW1RAmUAUcWMXuFMtzNGph",
+    "md5": "9ab915baa7995e92e396cd437131d5f6",
+    "checksum": "076cb6c7312f03837039edf6678df5c8594d4a54"
+  },
+  {
+    "username": "u",
+    "password": "a",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}+5Dyp8ymtMaFuw0ZiddmZosWXlZ7gblTsqYkBPwYSh4gu6nusvdKFrMSfHAVjjdltAcv7oOceYn6aabapazYWTsTV1154XloD+nXHjsFsbEnArhl",
+    "md5": "1952531c269df6ee55b700ab6689eecf",
+    "checksum": "1bc5ae5619ee3d13ee3d1cefa7a370a47ed59322"
+  },
+  {
+    "username": "u",
+    "password": "p%&?= +",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}F+SiEs/JaQEoBgaYcHuWmdRVNdtehDDrkMazbAeUWU20LkDQjutVxs1/w8XUoUtAixhunCQ7kZa6RRyERQZsIQ4AVXItGdbkS6EBVhkGtRn3uoI5XzoXzv2tYLL=",
+    "md5": "98f2aaaf5998cbcf080b6a5330f121cf",
+    "checksum": "e78425d536a79418ce5cbd5b7a6c5d6e9b154652"
+  },
+  {
+    "username": "u",
+    "password": "p%&?= +",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}aDsIPy8UgunJq42jVKd2pY/4ytxmuahIVRJOXEkFWTp/YDFegEdP3EjOE4HL0Y1pW8Kve4h42no54lp1DyQMUorkhAdKPHnqK0TSJPTttVDqBJX0ZAMhrFdVi8v=",
+    "md5": "5cdf7ba2feba55c08b9f36eea5e5301a",
+    "checksum": "b8a1a3b27b2f374d8edcb066f4d4d44e91987a15"
+  },
+  {
+    "username": "u",
+    "password": "密碼测试",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}NVDuhk+1TeybyshDad0lmeZleJ6djJi8H7E36VdihaznQ30idYJoxXRIAdn6fLie4LgFlmCHGn+PUkaHdeyN9ht+cogpKRdYq8riGilpNqO4pm2ewMCdljbSBymjV+PBu/AEw97BsZwDsWcq",
+    "md5": "7aa46405fe7188f96c1bd0391d519653",
+    "checksum": "d2a24cef1eb6949e3784505ac855187618454977"
+  },
+  {
+    "username": "u",
+    "password": "密碼测试",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}2IeVNo2/hHvGMdhC+d6rN5WutmfImmx5mycBVWcjNS+xJwLaydNoYIqaLlpKv0N8DKZn3rXvyaTe6QjMCxD8gLSn5Ae5N77AjslrbFxXz4wwPz2f1JsHhcBThHW+TGVeZOmhd3P4wphVVchn",
+    "md5": "9c9f7127478cf6be757629cf03544c45",
+    "checksum": "c92a48f3e8faad622b0b6dd9701c7c101496af0f"
+  },
+  {
+    "username": "u",
+    "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}aduNb+fhAi3kR6/JpvRn4Li/A3RV16nm+6Ppc7B5tV6CvbuY1l15lEqCjfKSjZ6u2TUak+zh1sybUViOMKSkXkd0N/Xm+z/9NnCusBMjJOEwwfI2BbXlFQi9N3pRh3PTqeKYdwreAw3IUJE38waeNd+o6gdWb+MJJmD5I+OMIp9GO6dqAMtZ6puUsOX7TUntfKe+nbTUpPu302hhjYA6kYUH8sIgqzqCVDJUBd7/e505PqLY97lfzS==",
+    "md5": "ff46cec59d2838c187f2052e03647474",
+    "checksum": "9a6b6abcdb055fab8751d866a3074543479b6c18"
+  },
+  {
+    "username": "u",
+    "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}E5bs+0oODifOazdUKghKVtWT44J6dMM3lp3QLOezBAprXy+mYVciSsgcMVVsTX4KMUm2hQfGWq9bvkqhzu8riA3Ewb1DfBbqfgI+jf6obE+/5Rb3LqkEDUFW1bSUtykwo1zh/8+Gqr4yemOh8SojaFOzIwrVO/Tx3UZYoBXE73+38iuTF7W/9djg8jo1IqppG3lYW3mCfAQskI/HHom4eV2jmXhbHDc3qRMjAZ7u+X1ybY8G0bNXxL==",
+    "md5": "f69b9fe0744baf9e40d70330c868ee23",
+    "checksum": "e77d3034b10c75036cd85faa788b6fd07a081b06"
+  },
+  {
+    "username": "20260000001",
+    "password": "a",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}G50VCdtI7pYHQQn26wJzv5ZkQnldVlKUpFQUvtNFenbmr5rDUT5q+YD/iexumOCrkPa8C/gwaogCmQsEm0qzD4NASV+RlrwLfbEVOYDlKMF26g/Ya96+QiwPb323CwJV",
+    "md5": "9ab915baa7995e92e396cd437131d5f6",
+    "checksum": "db19af2b09af79fc03e8d9ea362e4589d107fbe4"
+  },
+  {
+    "username": "20260000001",
+    "password": "a",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}3FdhuGM+0fD6bkQwr89mxucIdzdVGGXR1Xeq7ZMI+9w95BCcVQ0cnkhjNnuhXXKbydQ6Rr8yN3va6w57X16UJP7F0T3aEISiUUwitkEAnDxBtfP+i7pG+V1R7Ibw889Q",
+    "md5": "1952531c269df6ee55b700ab6689eecf",
+    "checksum": "ca87e088cd998cbf8cfa7fa35af869630f2dbd9b"
+  },
+  {
+    "username": "20260000001",
+    "password": "p%&?= +",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}IQrDzqhykn5Ajw7e0jrEqfOOA1nRu4+gtM4XB5K9HcQIimPNusJjeEw21z72iptm9OKC3695rbp/K2S10dFu8YJLqX0bpwRrhN8567gHaKqwuYQFrClOhYn3R1EPD8snZ+4n3L==",
+    "md5": "98f2aaaf5998cbcf080b6a5330f121cf",
+    "checksum": "018e6d20d0ed067f02241f38ba9e207cc68cd863"
+  },
+  {
+    "username": "20260000001",
+    "password": "p%&?= +",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}xH0us2GyU/wsMYBl6frpkRcbc408gdu5yPtlBjBRRMF4ZN7aIXIJmnksN4AXK18sZbs1X0KkwZF0H8MHr2eq2bj8S+nVQBVVKRQzpzGjfrpF+6AMQ77C8dZEpYtPg4G9evL0M+==",
+    "md5": "5cdf7ba2feba55c08b9f36eea5e5301a",
+    "checksum": "c3077f55e8c1a30adac29e84480245f2603df191"
+  },
+  {
+    "username": "20260000001",
+    "password": "密碼测试",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}WvdACej2kuW0aCWSJpvZu23bK8DTJqPNXUiVpotMFzsiFr83Yz6uSaBDBR8yI1u11ojLuHVl/B48eqygQaU4zmigWklZlmKUiWdMjiXU3qwDhLGf2h37H35pIJ/qi1pwh8YXyaWODi4YVTGPOjP/RQdWR7M=",
+    "md5": "7aa46405fe7188f96c1bd0391d519653",
+    "checksum": "e0011acfb82d567ea99a8dd02d423384f631b4be"
+  },
+  {
+    "username": "20260000001",
+    "password": "密碼测试",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}0Gr3oWXv/8JX/vphxham7F+SouTB+/vJz3S+bBL3QWfZqSIcHgm2/gmUoSaUJDk9aCrdL3tTw4DTC5x/MKZv4dh3G35oiyS+Tmr4eaCEbfqqvzwitta11iHwpQooGt0HKv7FgFZ0vpRxaSwgVXCqCcdkd64=",
+    "md5": "9c9f7127478cf6be757629cf03544c45",
+    "checksum": "3a68aed22f879fa61f19326e95e6ec5651392d59"
+  },
+  {
+    "username": "20260000001",
+    "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "ip": "10.1.2.3",
+    "challenge": "token",
+    "encoded": "{SRBX1}pv1ZcIh7l+ra9naz3e0mrTc7mBDAOfv+aZm7r+6nLlcfE4UZp0/3Gtew/RFzhXP794eqaV/vi6QyLmuJ73rSVh29ZljSUoBcPAoAXYMU/cgC1UlJVxZDd1grfSDMJGALuuta2JZe1HtAAX75Y3wCafDZbWKqpMs2NYmG1RryKDad7HpMFTved5fhsnQKfAcMqaVMEnvns79pIdahLwCvdC/Q0JvNQNCW8KzlVj1Gcc+zkNXNUnqTJ2yplXqQ1bTd",
+    "md5": "ff46cec59d2838c187f2052e03647474",
+    "checksum": "3a4d91d91a88370a6131771e9df45f0b06acda0a"
+  },
+  {
+    "username": "20260000001",
+    "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "ip": "10.1.2.3",
+    "challenge": "0123456789abcdef0123456789abcdef",
+    "encoded": "{SRBX1}6XdSige+N1BP96P8LnKWfbOPeR4GRoFiDsUpw1EVIGe7Ym1bdct9tzjbEY7IEW9e655TO/048MkuftwahVx9k9gkHBUuUH86gW0QiusJYxv7miDAzhU/v0fqXqVBOyyiFwuhXL3Yc9FzyF2v5mdLO6mXXLr1xUHuSFo6wNrZWjGRn+GEOE3hFSFMOomq4ADpdnTaxTbjffDZyNbVb0KzWcxeYpZZqnBj4IXM/UhlnNmhj2lSNkjdhduAxTVYjCxM",
+    "md5": "f69b9fe0744baf9e40d70330c868ee23",
+    "checksum": "f929026ac637fe4868011d9e672b8b82c393dd6b"
+  }
+]
