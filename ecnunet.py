@@ -124,7 +124,7 @@ def save_config(path, username, password, ac_id):
     with os.fdopen(fd, 'w', encoding='utf-8') as stream:
         json.dump({'username': username, 'password': password, 'ac_id': ac_id}, stream, ensure_ascii=True)
         stream.write('\n')
-    print('配置已保存，文件权限为 600（仅所有者可读写）。密码保存在本机文件中。')
+    print('配置已保存（权限 600）。')
 
 
 class Client:
@@ -148,7 +148,7 @@ class Client:
                 return parse_response(raw.decode('utf-8'), callback)
         except (HTTPError, URLError, OSError, UnicodeError, ssl.SSLError, ValueError, HTTPException):
             # Do not log exceptions: urllib exceptions can contain credential-bearing URLs.
-            raise ClientError('无法安全访问校园认证接口。请检查校园网连接、DNS、系统时间及证书。') from None
+            raise ClientError('认证接口连接失败，请检查网络、DNS、系统时间和证书。') from None
 
     def status(self):
         return self.request('rad_user_info')
@@ -178,10 +178,10 @@ class Client:
         state = portal_state(info)
         if state == 'online':
             if info['user_name'] != self.config['username']:
-                raise AuthError('此 IP 已由其他账号登录，已停止；请先找服务器管理员确认。')
+                raise AuthError('当前 IP 已由其他账号登录，请联系管理员确认。')
             return 'already_online'
         if state != 'offline':
-            raise ClientError('无法识别校园认证状态；尚未提交账号密码。请运行 doctor 查看脱敏状态摘要。')
+            raise ClientError('无法识别认证状态，未提交登录。请运行 doctor 查看详情。')
         ip = info.get('client_ip', '')
         try:
             ipaddress.ip_address(ip)
@@ -203,7 +203,7 @@ class Client:
             raise AuthError('认证被拒绝。请核对账号密码、账号状态、终端数限制及 ac_id；自动重试已停止。')
         verified = self.status()
         if portal_state(verified) != 'online' or verified['user_name'] != self.config['username']:
-            raise ClientError('认证请求已提交，但尚未确认本账号在线；请稍后用 status 查看。')
+            raise ClientError('登录后未查到本账号在线，请稍后运行 status。')
         return 'logged_in'
 
     def logout(self):
@@ -239,38 +239,38 @@ def watch(client, interval):
         except AuthError:
             raise  # Never repeatedly submit rejected credentials.
         except ClientError as exc:
-            log(str(exc) + ' 本轮稍后重试。')
+            log(str(exc) + ' 稍后重试。')
             delay = min(delay * 2, 900)
         time.sleep(delay)
 
 
 def diagnostic(client):
-    print('诊断只检查连接，不提交账号密码，也不改网络配置。')
+    print('检查网络连接：')
     try:
         socket.getaddrinfo('login.ecnu.edu.cn', 443)
-        print('DNS：可以解析校园认证域名。')
+        print('认证域名 DNS：正常')
     except OSError:
-        print('DNS：解析失败，请检查服务器 DNS / 网线 / 默认路由。')
+        print('认证域名 DNS：解析失败')
     try:
         info = client.status()
         state = portal_state(info)
         print('校园认证：' + {'online': '在线', 'offline': '离线', 'unknown': '无法识别响应'}[state])
         if state == 'unknown':
             print('脱敏状态摘要：' + json.dumps(status_summary(info), ensure_ascii=False))
-            print('尚未提交账号密码；需要根据此摘要适配接口状态。')
+            print('状态未识别，未执行登录。')
     except ClientError as exc:
         print('校园认证：' + str(exc))
         state = 'unknown'
     reachable = client.internet()
-    print('外网探测：' + ('至少一个 HTTPS 探测点可达。' if reachable else '两个探测点都未通过，不等于整个外网断开。'))
+    print('外网探测：' + ('至少一个探测点可达' if reachable else '两个探测点均未通过'))
     baidu = client.baidu_status()
     if baidu == 200:
-        print('百度 HTTPS：收到 HTTP 200，首页请求成功（未检查页面内容）。')
+        print('百度 HTTPS：HTTP 200')
     elif baidu is None:
-        print('百度 HTTPS：未取得 HTTP 响应，请检查 DNS、连接超时及证书。')
+        print('百度 HTTPS：未收到响应，请检查 DNS、连接和证书。')
     else:
-        print(f'百度 HTTPS：收到 HTTP {baidu}，已连接到 HTTPS 服务，但首页请求未确认成功。')
-    print('认证和探测均绕过环境代理；特定网站、代理本身的问题需要另行检查。')
+        print(f'百度 HTTPS：HTTP {baidu}')
+    print('以上请求未使用环境代理。')
     return 0 if state == 'online' and reachable else 1
 
 
@@ -302,7 +302,7 @@ def main(argv=None):
             if args.command == 'doctor':
                 return diagnostic(client)
             state = portal_state(client.status())
-            print({'online': '校园认证在线（不代表所有外部网站都能访问）。',
+            print({'online': '校园认证在线。',
                    'offline': '校园认证离线。', 'unknown': '校园认证状态无法确定。'}[state])
             return {'online': 0, 'offline': 1, 'unknown': 3}[state]
         if args.command == 'logout' and not args.yes:
@@ -312,8 +312,7 @@ def main(argv=None):
         client = Client(load_config(args.config), args.timeout)
         if args.command == 'login':
             result = client.login()
-            print('校园认证在线。' if result == 'already_online' else '校园网登录成功，已核验在线状态。')
-            print('若下载仍失败，请运行 doctor 检查外网探测结果。')
+            print('校园认证在线。' if result == 'already_online' else '登录成功，校园认证在线。')
         elif args.command == 'logout':
             client.logout()
         else:

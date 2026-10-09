@@ -42,6 +42,6 @@ UMask=0077
 WantedBy=multi-user.target
 UNIT
 systemctl daemon-reload
-echo '安装完成（尚未启动）。运行以下命令启用开机登录与自动重连：'
+echo '安装完成。启动服务并设为开机运行：'
 echo 'sudo systemctl enable --now ecnu-lab-network'
 echo '看日志：sudo journalctl -u ecnu-lab-network -n 30 --no-pager'
