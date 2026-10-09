@@ -43,6 +43,27 @@ class ProtocolTests(unittest.TestCase):
 
 
 class ResponseTests(unittest.TestCase):
+    def test_baidu_success_uses_https_get_and_timeout(self):
+        c = Client(timeout=7)
+        c.opener.open = Mock()
+        response = Mock(status=200)
+        c.opener.open.return_value.__enter__ = Mock(return_value=response)
+        c.opener.open.return_value.__exit__ = Mock(return_value=False)
+        self.assertEqual(c.baidu_status(), 200)
+        args, kwargs = c.opener.open.call_args
+        self.assertEqual(args[0].full_url, 'https://www.baidu.com/')
+        self.assertEqual(args[0].get_method(), 'GET')
+        self.assertEqual(kwargs['timeout'], 7)
+
+    def test_baidu_http_and_transport_failures_are_distinct(self):
+        from urllib.error import HTTPError
+        c = Client()
+        for code in (302, 403, 500):
+            c.opener.open = Mock(side_effect=HTTPError('https://www.baidu.com/', code, 'error', {}, None))
+            self.assertEqual(c.baidu_status(), code)
+        c.opener.open = Mock(side_effect=URLError('secret detail'))
+        self.assertIsNone(c.baidu_status())
+
     def test_status_summary_keeps_codes_not_identity(self):
         summary = status_summary({'error': 'not_online_error', 'ecode': 0,
                                   'client_ip': '10.2.3.4', 'user_name': 'private-user',
@@ -60,6 +81,7 @@ class ResponseTests(unittest.TestCase):
         c = Mock()
         c.status.return_value = {'error': 'unrecognized_state', 'client_ip': '10.2.3.4'}
         c.internet.return_value = False
+        c.baidu_status.return_value = None
         output = io.StringIO()
         with patch('ecnunet.socket.getaddrinfo'), contextlib.redirect_stdout(output):
             self.assertEqual(diagnostic(c), 1)
