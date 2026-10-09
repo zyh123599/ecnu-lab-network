@@ -7,13 +7,15 @@
 适用：接在华师大校园网内、使用 `login.ecnu.edu.cn` 深澜认证的 Linux 服务器。默认 `ac_id=1`，来自参考项目。
 
 
+2026-10-09：根据用户提供的服务器终端结果，已验证手动登录、在线状态核验及至少一个外网 HTTPS 探测点可达。已兼容学校返回的 `not_online_error` 离线状态。开机自启、断线重连及百度实机访问仍待验证。
+
 ## 能做什么
 
 | 功能 | 用处 |
 | --- | --- |
 | 手动登录 | 服务器没有浏览器也能认证 |
 | 查看状态 | 确认校园认证在线还是离线 |
-| 中文诊断 | 分开检查 DNS、校园认证和外网探测 |
+| 中文诊断 | 分开检查 DNS、校园认证、外网探测及百度 HTTPS |
 | 自动重连 | 默认每 5 分钟检查一次，离线时登录 |
 | 开机运行 | 用 systemd 托管，关闭 SSH 窗口后仍运行 |
 | 无第三方依赖 | 只需要 Python 3.8+，不用 pip 安装 |
@@ -224,3 +226,15 @@ python3 -m unittest discover -s tests -v
 ## 来源与许可证
 
 基于 [RISEN-B/ECNU-Network-CLI](https://github.com/RISEN-B/ECNU-Network-CLI) 的 SRun 协议实现改编，沿用 GPL-3.0-or-later。完整说明见 [NOTICE.md](NOTICE.md)，许可证见 [LICENSE](LICENSE)。本项目不是学校官方服务。
+
+## 单独检查百度
+
+在目标服务器运行以下命令（绕过环境代理，不修改网络设置）：
+
+```bash
+curl --noproxy '*' --connect-timeout 10 --max-time 20 -sS -o /dev/null -w 'HTTP=%{http_code} time=%{time_total}s\n' https://www.baidu.com/
+```
+
+`HTTP=200` 表示 HTTPS 请求成功；`HTTP=000` 表示没有取得 HTTP 响应，结合 curl 的错误提示排查。其他状态码说明收到了 HTTP 响应，但不代表首页正常。
+
+新版 `doctor` 也会单列百度结果。百度失败不会触发重新登录；doctor 的退出码仍按校园认证与原有外网探测判断。系统级透明代理和路由仍可能影响请求路径。
