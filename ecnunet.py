@@ -65,7 +65,7 @@ def parse_response(text, callback):
 def portal_state(data):
     if data.get('error') == 'ok' and data.get('user_name') and data.get('online_ip'):
         return 'online'
-    if data.get('error') == 'not_online':
+    if data.get('error') in ('not_online', 'not_online_error'):
         return 'offline'
     return 'unknown'
 
