@@ -58,13 +58,13 @@ class ResponseTests(unittest.TestCase):
 
     def test_doctor_unknown_prints_summary_without_login(self):
         c = Mock()
-        c.status.return_value = {'error': 'not_online_error', 'client_ip': '10.2.3.4'}
+        c.status.return_value = {'error': 'unrecognized_state', 'client_ip': '10.2.3.4'}
         c.internet.return_value = False
         output = io.StringIO()
         with patch('ecnunet.socket.getaddrinfo'), contextlib.redirect_stdout(output):
             self.assertEqual(diagnostic(c), 1)
         c.login.assert_not_called()
-        self.assertIn('not_online_error', output.getvalue())
+        self.assertIn('unrecognized_state', output.getvalue())
         self.assertNotIn('10.2.3.4', output.getvalue())
 
     def test_json_and_jsonp(self):
@@ -155,6 +155,16 @@ class CredentialTests(unittest.TestCase):
 
 
 class LoginTests(unittest.TestCase):
+    def test_observed_ecnu_offline_response_can_login(self):
+        observed = {'error': 'not_online_error', 'res': 'not_online_error',
+                    'ecode': '0', 'client_ip': '10.1.2.3',
+                    'online_ip': '10.1.2.3', 'user_name': ''}
+        self.assertEqual(portal_state(observed), 'offline')
+        c = self.client([observed, {'ecode': 0, 'challenge': 'test-token'},
+                         {'ecode': 0}, ON])
+        self.assertEqual(c.login(), 'logged_in')
+        self.assertEqual(c.request.call_count, 4)
+
     def client(self, replies):
         c = Client(CFG)
         c.request = Mock(side_effect=replies)
