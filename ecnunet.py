@@ -70,6 +70,20 @@ def portal_state(data):
     return 'unknown'
 
 
+def status_summary(data):
+    """Only expose short status codes and field presence, never raw responses."""
+    summary = {}
+    for key in ('error', 'error_msg', 'ecode', 'res', 'status', 'code'):
+        if key not in data:
+            continue
+        value = data[key]
+        text = str(value)
+        summary[key] = text if isinstance(value, (str, int)) and re.fullmatch(r'[A-Za-z_]{1,48}|-?\d{1,6}', text) else '<内容已隐藏>'
+    for key in ('client_ip', 'online_ip', 'user_name'):
+        summary[key + '_present'] = bool(data.get(key))
+    return summary
+
+
 def default_config():
     cred = os.environ.get('CREDENTIALS_DIRECTORY')
     return Path(cred) / 'config' if cred else Path.home() / '.config/ecnu-lab-network/config.json'
@@ -157,7 +171,7 @@ class Client:
                 raise AuthError('此 IP 已由其他账号登录，已停止；请先找服务器管理员确认。')
             return 'already_online'
         if state != 'offline':
-            raise ClientError('无法确认校园网是否离线，暂不重复提交账号密码。')
+            raise ClientError('无法识别校园认证状态；尚未提交账号密码。请运行 doctor 查看脱敏状态摘要。')
         ip = info.get('client_ip', '')
         try:
             ipaddress.ip_address(ip)
@@ -228,8 +242,12 @@ def diagnostic(client):
     except OSError:
         print('DNS：解析失败，请检查服务器 DNS / 网线 / 默认路由。')
     try:
-        state = portal_state(client.status())
+        info = client.status()
+        state = portal_state(info)
         print('校园认证：' + {'online': '在线', 'offline': '离线', 'unknown': '无法识别响应'}[state])
+        if state == 'unknown':
+            print('脱敏状态摘要：' + json.dumps(status_summary(info), ensure_ascii=False))
+            print('尚未提交账号密码；需要根据此摘要适配接口状态。')
     except ClientError as exc:
         print('校园认证：' + str(exc))
         state = 'unknown'
