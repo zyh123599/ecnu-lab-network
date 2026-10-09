@@ -13,6 +13,7 @@
 ```bash
 python3 ecnunet.py init
 ```
+<img width="900" height="87" alt="image" src="https://github.com/user-attachments/assets/390dd984-a2cc-4219-bbc1-8130f7911690" />
 
 密码输入时不显示字符。配置保存在 `~/.config/ecnu-lab-network/config.json`，权限为 `600`。密码以明文保存在本机，请勿上传或分享该文件。
 
@@ -20,8 +21,11 @@ python3 ecnunet.py init
 
 ```bash
 python3 ecnunet.py login
+```
+```bash
 python3 ecnunet.py doctor
 ```
+<img width="900" height="78" alt="image" src="https://github.com/user-attachments/assets/8209685d-a0bd-4206-8f0a-b5f2a3d775bb" />
 
 `login` 成功后会再次查询在线状态；已登录时不会重复认证。`doctor` 检查校园认证、外网探测点和百度 HTTPS，分别输出结果。
 
