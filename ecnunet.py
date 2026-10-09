@@ -163,6 +163,16 @@ class Client:
                 pass
         return False
 
+    def baidu_status(self):
+        """Independent HTTPS GET; never use a site failure to force re-login."""
+        try:
+            with self.opener.open(Request('https://www.baidu.com/'), timeout=self.timeout) as response:
+                return response.status
+        except HTTPError as exc:
+            return exc.code
+        except (URLError, OSError, ssl.SSLError, HTTPException):
+            return None
+
     def login(self):
         info = self.status()
         state = portal_state(info)
@@ -253,6 +263,13 @@ def diagnostic(client):
         state = 'unknown'
     reachable = client.internet()
     print('外网探测：' + ('至少一个 HTTPS 探测点可达。' if reachable else '两个探测点都未通过，不等于整个外网断开。'))
+    baidu = client.baidu_status()
+    if baidu == 200:
+        print('百度 HTTPS：收到 HTTP 200，首页请求成功（未检查页面内容）。')
+    elif baidu is None:
+        print('百度 HTTPS：未取得 HTTP 响应，请检查 DNS、连接超时及证书。')
+    else:
+        print(f'百度 HTTPS：收到 HTTP {baidu}，已连接到 HTTPS 服务，但首页请求未确认成功。')
     print('认证和探测均绕过环境代理；特定网站、代理本身的问题需要另行检查。')
     return 0 if state == 'online' and reachable else 1
 
