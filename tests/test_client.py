@@ -9,7 +9,8 @@ from unittest.mock import Mock, patch
 from urllib.error import URLError
 
 from ecnunet import (AuthError, Client, ClientError, ConfigError, NoRedirect,
-                     load_config, main, parse_response, portal_state, save_config, watch)
+                     load_config, main, parse_response, portal_state, save_config, watch,
+                     status_summary, diagnostic)
 from protocol import SrunProtocol
 
 CFG = {'username': 'test-user', 'password': 'test-%-密 码', 'ac_id': '1'}
@@ -42,6 +43,30 @@ class ProtocolTests(unittest.TestCase):
 
 
 class ResponseTests(unittest.TestCase):
+    def test_status_summary_keeps_codes_not_identity(self):
+        summary = status_summary({'error': 'not_online_error', 'ecode': 0,
+                                  'client_ip': '10.2.3.4', 'user_name': 'private-user',
+                                  'password': 'SECRET', 'challenge': 'TOKEN'})
+        self.assertEqual(summary['error'], 'not_online_error')
+        self.assertEqual(summary['ecode'], '0')
+        for value in ('10.2.3.4', 'private-user', 'SECRET', 'TOKEN'):
+            self.assertNotIn(value, str(summary))
+
+    def test_status_summary_hides_free_text(self):
+        for value in ('user=123456789 password=SECRET', {'password': 'SECRET'}, '123456789', 'https://host/?token=SECRET'):
+            self.assertEqual(status_summary({'error_msg': value})['error_msg'], '<内容已隐藏>')
+
+    def test_doctor_unknown_prints_summary_without_login(self):
+        c = Mock()
+        c.status.return_value = {'error': 'not_online_error', 'client_ip': '10.2.3.4'}
+        c.internet.return_value = False
+        output = io.StringIO()
+        with patch('ecnunet.socket.getaddrinfo'), contextlib.redirect_stdout(output):
+            self.assertEqual(diagnostic(c), 1)
+        c.login.assert_not_called()
+        self.assertIn('not_online_error', output.getvalue())
+        self.assertNotIn('10.2.3.4', output.getvalue())
+
     def test_json_and_jsonp(self):
         for value in ('{"error":"ok"}', 'cb({"error":"ok"});', ' cb(\n{"error":"ok"}\n) '):
             self.assertEqual(parse_response(value, 'cb'), {'error': 'ok'})
